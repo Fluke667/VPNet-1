@@ -8,7 +8,7 @@
 # to `latest`! See
 # https://github.com/phusion/baseimage-docker/blob/master/Changelog.md
 # for a list of version numbers.
-FROM phusion/baseimage:0.9.19
+FROM debian:stretch-slim
 MAINTAINER AcrossFW <dev@acrossfw.com>
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -48,13 +48,6 @@ RUN apt-get update -qq && apt-get -qqy install \
 
 #    && sed -i 's/files dns/files/g' /etc/nsswitch.conf \
 
-ENV BATS_VERSION 0.4.0
-RUN curl -s -o "/tmp/v${BATS_VERSION}.tar.gz" -L \
-      "https://github.com/sstephenson/bats/archive/v${BATS_VERSION}.tar.gz" \
-    && tar -xzf "/tmp/v${BATS_VERSION}.tar.gz" -C /tmp/ \
-    && bash "/tmp/bats-${BATS_VERSION}/install.sh" /usr/local \
-    \
-    && rm -rf /tmp/*
 
 ENV ADMIN_NAME vpnet
 ENV ADMIN_PASS vpnet.io
@@ -81,7 +74,7 @@ RUN ln -s /etc/service /service \
 #
 # Node.JS
 #
-RUN curl -sL https://deb.nodesource.com/setup_7.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
   && apt-get install -qqy nodejs
 
 ENV PORT_WEB 10080
@@ -195,8 +188,7 @@ EXPOSE ${PORT_SHADOWSOCKS}/tcp ${PORT_SHADOWSOCKS}/udp
 
 ENV SHADOWSOCKS_ENCRYPT_METHOD salsa20
 
-RUN echo 'deb http://archive.ubuntu.com/ubuntu yakkety main universe' > /etc/apt/sources.list \
-      && apt-get update -qq \
+RUN   apt-get update -qq \
       && apt-get install -qqy shadowsocks-libev \
       && ln -s ${ACROSSFW_HOME}/service/shadowsocks /service/shadowsocks \
       \
