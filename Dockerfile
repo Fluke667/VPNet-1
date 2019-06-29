@@ -8,7 +8,7 @@
 # to `latest`! See
 # https://github.com/phusion/baseimage-docker/blob/master/Changelog.md
 # for a list of version numbers.
-FROM debian:stretch-slim
+FROM phusion/baseimage:0.11
 MAINTAINER AcrossFW <dev@acrossfw.com>
 
 ENV DEBIAN_FRONTEND noninteractive
