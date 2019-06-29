@@ -228,6 +228,7 @@ RUN URL=$(curl -s https://api.github.com/repos/xtaci/kcptun/releases/latest | jq
       && wget --quiet -O /tmp/kcptun.tgz "$URL" \
       && [ -e "${ACROSSFW_HOME}/service/kcptun/bin/" ] || mkdir -p ${ACROSSFW_HOME}/service/kcptun/bin/ \
       && tar zxvf /tmp/kcptun.tgz -C ${ACROSSFW_HOME}/service/kcptun/bin/ \
+      && mkdir -p /service/kcptun \
       && ln -s ${ACROSSFW_HOME}/service/kcptun /service/kcptun \
       && rm -f /tmp/kcptun.tgz
 
