@@ -52,7 +52,7 @@ vpnet::init_env_var() {
 
 vpnet::init_host_id() {
   local id
-  id=$(ip addr show eth0 | grep ether | awk '{print $2}' | awk -F: '{print $5$6}')
+  id=$(ip addr show ens3 | grep ether | awk '{print $2}' | awk -F: '{print $5$6}')
   HOSTNAME=${HOSTNAME/vpnet./vpnet-$id.}
 }
 
@@ -140,13 +140,13 @@ vpnet::init_network() {
   sysctl -w net.core.default_qdisc=fq           || echo "WARN: sysctl default_qdisc fail"
   sysctl -w net.ipv4.tcp_congestion_control=bbr || echo "WARN: sysctl tcp_congestion_control fail"
 
-  # XXX does there always be `eth0` in docker ???
+  # XXX does there always be `ens3` in docker ???
   echo "Setting network filter ..."
-  iptables -t nat -A POSTROUTING -s 10.0.0.0/8      -o eth0 -j MASQUERADE || echo "WARN: iptables fail"
-  iptables -t nat -A POSTROUTING -s 172.16.0.0/12   -o eth0 -j MASQUERADE || echo "WARN: iptables fail"
-  iptables -t nat -A POSTROUTING -s 192.168.0.0/16  -o eth0 -j MASQUERADE || echo "WARN: iptables fail"
+  iptables -t nat -A POSTROUTING -s 10.0.0.0/8      -o ens3 -j MASQUERADE || echo "WARN: iptables fail"
+  iptables -t nat -A POSTROUTING -s 172.16.0.0/12   -o ens3 -j MASQUERADE || echo "WARN: iptables fail"
+  iptables -t nat -A POSTROUTING -s 192.168.0.0/16  -o ens3 -j MASQUERADE || echo "WARN: iptables fail"
 
-  # ip6tables -t nat -A POSTROUTING -s 2a00:1450:400c:c05::/64 -o eth0 -j MASQUERADE
+  # ip6tables -t nat -A POSTROUTING -s 2a00:1450:400c:c05::/64 -o ens3 -j MASQUERADE
 
   # XXX no need ? iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 }
