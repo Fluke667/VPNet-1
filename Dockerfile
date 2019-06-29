@@ -43,7 +43,7 @@ RUN apt-get update -qq && apt-get -qqy install \
     	tinc \
     	vim \
     	wget \
-      \
+      bats \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #    && sed -i 's/files dns/files/g' /etc/nsswitch.conf \
