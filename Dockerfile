@@ -21,6 +21,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 #	module-init-tools \ operation not permitted inside docker
 RUN apt-get update -qq && apt-get -qqy install \
+      linux-headers-4.9.0-9-amd64 \
       apt-utils \
     	curl \
     	dnsmasq \
